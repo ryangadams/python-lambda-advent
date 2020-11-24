@@ -52,26 +52,4 @@ class CdkStack(core.Stack):
             integration=(LambdaProxyIntegration(handler=advent_function)),
         )
 
-        # s3_bucket = Bucket(
-        #     self,
-        #     f"{id}-website-bucket",
-        #     public_read_access=True,
-        #     website_index_document="index.html",
-        #     website_error_document="404.html",
-        # )
-        # deployment = s3deploy.BucketDeployment(
-        #     self,
-        #     f"{id}-website-deployment",
-        #     sources=[s3deploy.Source.asset("website")],
-        #     destination_bucket=s3_bucket,
-        # )
-        #
-        # bucket_integration = HttpProxyIntegration(
-        #     url=f"{s3_bucket.bucket_website_url}/{{proxy}}",
-        # )
-        # api.add_routes(
-        #     path="/{proxy+}",
-        #     methods=[HttpMethod.GET],
-        #     integration=bucket_integration,
-        # )
         core.CfnOutput(self, f"{id}-url", value=api.api_endpoint)
