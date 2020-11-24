@@ -1,0 +1,44 @@
+{
+    "version": "2.0",
+    "routeKey": "GET /",
+    "rawPath": "/",
+    "rawQueryString": "",
+    "cookies": [
+        "s_sess=%20s_cc%3Dtrue%3B%20s_sq%3D%3B",
+        "pN=231"
+    ],
+    "headers": {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-GB,en-US;q=0.7,en;q=0.3",
+        "content-length": "0",
+        "dnt": "1",
+        "host": "foo.execute-api.eu-west-1.amazonaws.com",
+        "sec-gpc": "1",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0",
+        "x-amzn-trace-id": "Root=1-foo",
+        "x-forwarded-for": "127.0.0.1",
+        "x-forwarded-port": "443",
+        "x-forwarded-proto": "https"
+    },
+    "requestContext": {
+        "accountId": "foo",
+        "apiId": "bar",
+        "domainName": "bar.execute-api.eu-west-1.amazonaws.com",
+        "domainPrefix": "bar",
+        "http": {
+            "method": "GET",
+            "path": "/",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "127.0.0.1",
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:83.0) Gecko/20100101 Firefox/83.0"
+        },
+        "requestId": "WOal7jzujoEEPZA=",
+        "routeKey": "GET /",
+        "stage": "$default",
+        "time": "18/Nov/2020:22:47:40 +0000",
+        "timeEpoch": 1605739660247
+    },
+    "isBase64Encoded": false
+}

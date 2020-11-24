@@ -1,0 +1,36 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+isort = "*"
+flake8 = "*"
+mypy = "*"
+pytest = "*"
+pytest-cov = "*"
+"aws-cdk.core" = "*"
+"aws-cdk.aws-apigatewayv2" = "*"
+"aws-cdk.aws-lambda" = "*"
+"aws-cdk.aws-apigatewayv2-integrations" = "*"
+"aws_cdk.aws_iam" = "*"
+"aws_cdk.aws_s3" = "*"
+"aws-cdk.aws-s3-deployment" = "*"
+freezegun = "*"
+pyquery = "*"
+pytest-env = "*"
+
+[packages]
+google-api-python-client = "*"
+google-auth-httplib2 = "*"
+google-auth-oauthlib = "*"
+boto3 = "*"
+oauth2client = "*"
+inflect = "*"
+
+[requires]
+python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true

@@ -1,0 +1,37 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /",
+  "rawPath": "/",
+  "rawQueryString": "",
+  "headers": {
+    "accept": "text/html",
+    "accept-encoding": "gzip, deflate, br",
+    "cache-control": "no-cache",
+    "content-length": "0",
+    "host": "my-api.execute-api.eu-west-1.amazonaws.com",
+    "user-agent": "PostmanRuntime/7.26.5",
+    "x-amzn-trace-id": "Root=foo",
+    "x-forwarded-for": "127.0.0.1",
+    "x-forwarded-port": "443",
+    "x-forwarded-proto": "https"
+  },
+  "requestContext": {
+    "accountId": "bar",
+    "apiId": "foo",
+    "domainName": "foo.execute-api.eu-west-1.amazonaws.com",
+    "domainPrefix": "foo",
+    "http": {
+      "method": "GET",
+      "path": "/",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "127.0.0.1",
+      "userAgent": "PostmanRuntime/7.26.5"
+    },
+    "requestId": "WYA-foo=",
+    "routeKey": "GET /",
+    "stage": "$default",
+    "time": "21/Nov/2020:20:41:54 +0000",
+    "timeEpoch": 1605991314360
+  },
+  "isBase64Encoded": "False"
+}
