@@ -20,6 +20,10 @@ class CdkStack(core.Stack):
         credentials_secret_name = "advent/gdrive-service-credentials"
         super().__init__(scope, id, **kwargs)
 
+        google_sheet_id = self.node.try_get_context("sheet_id")
+
+        google_sheet_range = self.node.try_get_context("sheet_range")
+
         advent_function = _lambda.Function(
             self,
             f"{id}-function",
@@ -28,8 +32,8 @@ class CdkStack(core.Stack):
             runtime=_lambda.Runtime.PYTHON_3_8,
             environment={
                 "GDRIVE_CREDENTIALS_SECRET": credentials_secret_name,
-                "SHEET_ID": "foo",
-                "SHEET_RANGE": "Sheet1!A:E",
+                "SHEET_ID": google_sheet_id,
+                "SHEET_RANGE": google_sheet_range,
             },
             timeout=core.Duration.seconds(10),
         )
