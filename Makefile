@@ -5,7 +5,7 @@ PYTHON = pipenv run python
 
 # .PHONY defines parts of the makefile that are not dependant on any specific file
 # This is most often used to store functions
-.PHONY = help test build quickbuild deploy clean synth
+.PHONY = help test build quickbuild deploy destroy clean synth
 
 # Defining an array variable
 FILES = input output
@@ -17,9 +17,13 @@ FILES = input output
 # The @ makes sure that the command itself isn't echoed in the terminal
 help:
 	@echo "---------------HELP-----------------"
-	@echo "To setup the project type make setup"
 	@echo "To test the project type make test"
+	@echo "To package the python project for deployment type make build"
+	@echo "To update the packaged python project for deployment type make quickbuild (doesn't run pip install)"
 	@echo "To deploy to AWS type make deploy"
+	@echo "To delete the stack on cloudformation type make destroy"
+	@echo "To clean the build directory type make clean"
+	@echo "To generate the cloudformation yaml type make synth"
 	@echo "------------------------------------"
 
 
@@ -38,8 +42,12 @@ quickbuild:
 	${PYTHON} -m zipdir _build
 
 deploy:
-	cdk deploy --profile personal
+	# set your profile as AWS_PROFILE in your shell. (Or use direnv .envrc to set it per project)
+	cdk deploy --profile ${AWS_PROFILE}
 
+destroy:
+	# set your profile as AWS_PROFILE in your shell. (Or use direnv .envrc to set it per project)
+	cdk destroy --profile ${AWS_PROFILE}
 synth:
 	cdk synth > template.yml
 
