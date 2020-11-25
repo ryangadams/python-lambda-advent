@@ -93,30 +93,15 @@ def hours_ago(num):
     return datetime.now() - timedelta(hours=num, seconds=-5)
 
 
+# fmt: off
 @pytest.mark.parametrize(
     "data,timestamp,expected_result",
     [
         (True, datetime.now(), False),  # has recent content
-        (
-            None,
-            now(),
-            True,
-        ),  # has no content but thinks it does (shouldn't happen)
-        (
-            None,
-            hours_ago(2),
-            True,
-        ),  # no content, and it is expired (shouldn't happen)
-        (
-            True,
-            hours_ago(2),
-            True,
-        ),  # has content, but it's expired
-        (
-            True,
-            hours_ago(1),
-            False,
-        ),  # has content, not yet expired
+        (None, now(), True),  # has no content but thinks it does (shouldn't happen)
+        (None, hours_ago(2), True),  # no content, and it is expired (shouldn't happen)
+        (True, hours_ago(2), True),  # has content, but it's expired
+        (True, hours_ago(1), False),  # has content, not yet expired
     ],
 )
 def test_supports_simple_caching(data, timestamp, expected_result):
@@ -124,3 +109,4 @@ def test_supports_simple_caching(data, timestamp, expected_result):
     gs.simple_caching_time = timestamp
 
     assert cache_expired_or_empty() is expected_result
+# fmt: on
