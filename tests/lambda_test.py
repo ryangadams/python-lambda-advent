@@ -1,7 +1,8 @@
 import json
 import pathlib
 
-from functions.advent.handler import handler, should_show_preview
+from functions.advent.handler import handler
+from functions.advent.request import should_show_preview
 
 
 def test_makes_plain_request():
