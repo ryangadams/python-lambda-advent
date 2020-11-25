@@ -20,9 +20,10 @@ def cache_expired_or_empty():
         return True
     if simple_caching_time is None:
         return True
-    request_time = datetime.today()
-    if (request_time - simple_caching_time) > cache_time:
-        return False
+    request_time = datetime.now()
+    if (request_time - simple_caching_time) >= cache_time:
+        return True
+    return False
 
 
 def parse_to_shape(sheet_data):

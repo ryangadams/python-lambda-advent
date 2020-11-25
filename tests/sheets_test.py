@@ -1,8 +1,18 @@
 import json
 import os
+from datetime import datetime, timedelta
 
+import pytest
 
-from functions.advent.google_sheets import get_sheet_data, parse_to_shape
+import functions.advent.google_sheets as gs
+
+from functions.advent.google_sheets import (
+    get_sheet_data,
+    parse_to_shape,
+    simple_caching_sheet_data,
+    simple_caching_time,
+    cache_expired_or_empty,
+)
 
 
 def test_sheets_gets_sheets_data():
@@ -71,3 +81,46 @@ def test_data_mapper():
         "title": "2020's Advent Calendar",
     }
     assert parse_to_shape(input_data) == expected_output
+
+
+# A couple of helpers
+def now():
+    return datetime.now()
+
+
+def hours_ago(num):
+    # has a hack to fix correct for test run duration
+    return datetime.now() - timedelta(hours=num, seconds=-5)
+
+
+@pytest.mark.parametrize(
+    "data,timestamp,expected_result",
+    [
+        (True, datetime.now(), False),  # has recent content
+        (
+            None,
+            now(),
+            True,
+        ),  # has no content but thinks it does (shouldn't happen)
+        (
+            None,
+            hours_ago(2),
+            True,
+        ),  # no content, and it is expired (shouldn't happen)
+        (
+            True,
+            hours_ago(2),
+            True,
+        ),  # has content, but it's expired
+        (
+            True,
+            hours_ago(1),
+            False,
+        ),  # has content, not yet expired
+    ],
+)
+def test_supports_simple_caching(data, timestamp, expected_result):
+    gs.simple_caching_sheet_data = data
+    gs.simple_caching_time = timestamp
+
+    assert cache_expired_or_empty() is expected_result
