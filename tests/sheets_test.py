@@ -5,21 +5,15 @@ from datetime import datetime, timedelta
 import pytest
 
 import functions.advent.google_sheets as gs
-
-from functions.advent.google_sheets import (
-    get_sheet_data,
-    parse_to_shape,
-    simple_caching_sheet_data,
-    simple_caching_time,
-    cache_expired_or_empty,
-)
+from functions.advent.calendar import parse_to_shape
+from functions.advent.csv_sheets import get_sheet_data_csv
 
 
 def test_sheets_gets_sheets_data():
     def does_nothing_mapper(response_data):
         return response_data
 
-    sheet_data = get_sheet_data(does_nothing_mapper)
+    sheet_data = gs.get_sheet_data(does_nothing_mapper)
     expected_data = {
         "range": "Sheet1!A1:E1000",
         "majorDimension": "ROWS",
@@ -37,7 +31,21 @@ def test_sheets_gets_sheets_data():
                 "Welcome",
                 "",
                 "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                "First date",
+                "Advent Day 1",
+            ],
+            [
+                "2",
+                "Hello",
+                "",
+                "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "Advent Day 2",
+            ],
+            [
+                "3",
+                "Goodbye",
+                "",
+                "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "Advent day 3",
             ],
         ],
     }
@@ -108,5 +116,42 @@ def test_supports_simple_caching(data, timestamp, expected_result):
     gs.simple_caching_sheet_data = data
     gs.simple_caching_time = timestamp
 
-    assert cache_expired_or_empty() is expected_result
+    assert gs.cache_expired_or_empty() is expected_result
 # fmt: on
+
+
+def test_gets_csv_data():
+    def does_nothing_mapper(response_data):
+        return response_data
+
+    sheet_data = get_sheet_data_csv(does_nothing_mapper)
+    expected_data = {
+        "range": "Sheet1!A1:E1000",
+        "majorDimension": "ROWS",
+        "values": [
+            [
+                "Meta",
+                "Title",
+                "2020's Advent Calendar",
+                "Image",
+                "https://www.placecage.com/1280/720",
+            ],
+            ["Date", "Title", "Pic Url (not used)", "Vid Url", "Comment"],
+            [
+                "1",
+                "Welcome",
+                "",
+                "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "Advent Day 1",
+            ],
+            [
+                "2",
+                "Hello",
+                "",
+                "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                "Advent Day 2",
+            ],
+        ],
+    }
+
+    assert sheet_data == expected_data

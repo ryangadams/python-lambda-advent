@@ -11,7 +11,7 @@ def build_advent_calendar(advent_data, show_all):
         html = template_object.substitute(
             CALENDAR_TITLE=advent_data["title"],
             BG_IMAGE=advent_data["image"],
-            WINDOW_LIST=build_box_list(advent_data),
+            WINDOW_LIST=build_window_list(advent_data),
             PANEL_LIST=build_panel_list(advent_data, show_all=show_all),
         )
     return html
@@ -63,7 +63,7 @@ def build_panel(day, title, image, video, comments):
     return panel_template
 
 
-def build_box_list(calendar_data):
+def build_window_list(calendar_data):
     """
     here we want to print out the full list (24 days), but only add the opened
     class to dates in the past
@@ -85,3 +85,22 @@ def build_window(day):
     return f"""<li {'class="opened""' if is_open else ''}>
     <a href="#{p.number_to_words(day)}">{day}</a>
     </li>"""
+
+
+def parse_to_shape(sheet_data):
+    values = [
+        {
+            "day": row[0],
+            "title": row[1],
+            "image": row[2],
+            "video": row[3],
+            "comments": row[4],
+        }
+        for row in sheet_data["values"]
+        if row[0] != "Date" and row[0] != "Meta"  # ignore first rows
+    ]
+    # hard coded references
+    calendar_title = sheet_data["values"][0][2]
+    calendar_image = sheet_data["values"][0][4]
+
+    return {"values": values, "title": calendar_title, "image": calendar_image}

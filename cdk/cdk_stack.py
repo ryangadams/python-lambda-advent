@@ -3,16 +3,11 @@ from aws_cdk import core
 from aws_cdk.aws_apigatewayv2 import (
     HttpApi,
     HttpMethod,
-    HttpIntegration,
-    HttpIntegrationType,
 )
 from aws_cdk.aws_apigatewayv2_integrations import (
     LambdaProxyIntegration,
-    HttpProxyIntegration,
 )
 from aws_cdk.aws_iam import PolicyStatement, Effect
-from aws_cdk.aws_s3 import Bucket
-import aws_cdk.aws_s3_deployment as s3deploy
 
 
 class CdkStack(core.Stack):
@@ -37,6 +32,7 @@ class CdkStack(core.Stack):
             },
             timeout=core.Duration.seconds(10),
         )
+
         advent_function.add_to_role_policy(
             PolicyStatement(
                 effect=Effect.ALLOW,

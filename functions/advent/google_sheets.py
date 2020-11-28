@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from typing import Union
 
 from apiclient import discovery
+
+from functions.advent.calendar import parse_to_shape
 from functions.advent.google_credentials import get_credentials
 
 service = discovery.build("sheets", "v4", credentials=(get_credentials()))
@@ -24,25 +26,6 @@ def cache_expired_or_empty():
     if (request_time - simple_caching_time) >= cache_time:
         return True
     return False
-
-
-def parse_to_shape(sheet_data):
-    values = [
-        {
-            "day": row[0],
-            "title": row[1],
-            "image": row[2],
-            "video": row[3],
-            "comments": row[4],
-        }
-        for row in sheet_data["values"]
-        if row[0] != "Date" and row[0] != "Meta"  # ignore first rows
-    ]
-    # hard coded references
-    calendar_title = sheet_data["values"][0][2]
-    calendar_image = sheet_data["values"][0][4]
-
-    return {"values": values, "title": calendar_title, "image": calendar_image}
 
 
 def get_sheet_data(data_mapper):
