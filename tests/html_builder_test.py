@@ -38,12 +38,12 @@ def test_converts_day_number_to_text():
 
 
 def test_builds_all_boxes():
-    html = pq(build_window_list(sample_data))
+    html = pq(build_window_list())
     assert len(html("li")) == 24
 
 
 def test_box_element_has_correct_id_and_text():
-    html = pq(build_window_list(sample_data))
+    html = pq(build_window_list())
     eleventh = html("li").eq(10)
     assert eleventh.text() == "11"
     assert eleventh.find("a").attr("href") == "#eleven"
@@ -51,7 +51,7 @@ def test_box_element_has_correct_id_and_text():
 
 @freeze_time("2012-12-15")
 def test_box_list_has_the_right_number_open():
-    html = pq(build_window_list(sample_data))
+    html = pq(build_window_list())
     assert len(html("li.opened")) == 15
 
 

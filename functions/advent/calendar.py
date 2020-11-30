@@ -6,18 +6,19 @@ import inflect
 
 
 def build_advent_calendar(advent_data, show_all):
+    title, image, dates, *extras = advent_data
     with open(pathlib.Path(__file__).parent.absolute() / "calendar.html") as template:
         template_object = Template(template.read())
         html = template_object.substitute(
-            CALENDAR_TITLE=advent_data["title"],
-            BG_IMAGE=advent_data["image"],
-            WINDOW_LIST=build_window_list(advent_data),
-            PANEL_LIST=build_panel_list(advent_data, show_all=show_all),
+            CALENDAR_TITLE=title,
+            BG_IMAGE=image,
+            WINDOW_LIST=build_window_list(),
+            PANEL_LIST=build_panel_list(dates, show_all=show_all),
         )
     return html
 
 
-def build_panel_list(calendar_data, show_all=False):
+def build_panel_list(dates, show_all=False):
     """
     We only want to get a panel for each day up to and including today.
     If it's January we'll show the whole calendar, otherwise show none, unless it's December
@@ -26,19 +27,15 @@ def build_panel_list(calendar_data, show_all=False):
 
     today = datetime.today()
     if show_all:
-        filtered_dates = calendar_data["values"]
+        filtered_dates = dates
     else:
         if 1 < today.month < 12:
             return ""
 
         if today.month == 12:
-            filtered_dates = [
-                date
-                for date in calendar_data["values"]
-                if int(date["day"]) <= today.day
-            ]
+            filtered_dates = [date for date in dates if int(date["day"]) <= today.day]
         else:
-            filtered_dates = calendar_data["values"]
+            filtered_dates = dates
     print("showing")
     print(filtered_dates)
     built_html = [build_panel(**date) for date in filtered_dates]
@@ -63,7 +60,7 @@ def build_panel(day, title, image, video, comments):
     return panel_template
 
 
-def build_window_list(calendar_data):
+def build_window_list():
     """
     here we want to print out the full list (24 days), but only add the opened
     class to dates in the past
