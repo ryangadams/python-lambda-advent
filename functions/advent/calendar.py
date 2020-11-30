@@ -55,7 +55,7 @@ def build_panel(day, title, image, video, comments):
                     <h2>{current_day.capitalize()} – {title}</h2>
                     <p>{comments}</p>
                     <div class='embed-container'>
-                        <iframe src='{video}' frameborder='0' allowfullscreen></iframe>
+                        <iframe id="vid-{day}" src="{video}?version=3&enablejsapi=1&autoplay=1" frameborder='0' allowfullscreen enablejsapi="1"></iframe>
                     </div>
                 </div>
             </div>
