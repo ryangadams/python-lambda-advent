@@ -3,7 +3,12 @@ import pathlib
 
 from freezegun import freeze_time
 from pyquery import PyQuery as pq
-from functions.advent.calendar import build_panel_list, build_panel, build_window_list
+from functions.advent.calendar import (
+    build_panel_list,
+    build_panel,
+    build_window_list,
+    build_advent_calendar,
+)
 
 with open(pathlib.Path(__file__).parent / "fixtures/sample_data.json") as file:
     sample_data = json.load(file)
@@ -11,14 +16,14 @@ with open(pathlib.Path(__file__).parent / "fixtures/sample_data.json") as file:
 
 @freeze_time("2012-01-14")
 def test_prints_all_dates_in_january():
-    output = build_panel_list(sample_data)
+    output = build_panel_list(sample_data["values"])
     html = pq(output)
     assert len(html("div.panel-container")) == 24
 
 
 @freeze_time("2012-12-14")
 def test_prints_up_to_today_in_december():
-    output = build_panel_list(sample_data)
+    output = build_panel_list(sample_data["values"])
     html = pq(output)
     assert len(html("div.panel-container")) == 14
 
@@ -75,3 +80,8 @@ def test_building_panels():
     output = "".join(built_html)
     print(output)
     assert len(built_html) == 1
+
+
+def test_build_html():
+    built_html = build_advent_calendar(sample_data, False)
+    print(built_html)

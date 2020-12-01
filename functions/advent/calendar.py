@@ -6,7 +6,9 @@ import inflect
 
 
 def build_advent_calendar(advent_data, show_all):
-    title, image, dates, *extras = advent_data
+    title = advent_data["title"]
+    image = advent_data["image"]
+    dates = advent_data["values"]
     with open(pathlib.Path(__file__).parent.absolute() / "calendar.html") as template:
         template_object = Template(template.read())
         html = template_object.substitute(
